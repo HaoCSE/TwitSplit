@@ -1,0 +1,20 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="android:textViewStyle">@style/CustomFontStyle</item>
+        <item name="android:editTextStyle">@style/CustomFontEditTextStyle</item>
+    </style>
+
+    <style name="CustomFontStyle" parent="@android:style/TextAppearance.Small">
+        <item name="android:fontFamily">@font/roboto_regular</item>
+    </style>
+    <style name="CustomFontEditTextStyle" parent="@android:style/Widget.EditText">
+        <item name="android:fontFamily">@font/roboto_regular</item>
+    </style>
+</resources>

@@ -1,0 +1,99 @@
+apply plugin: 'com.android.feature'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+android {
+    publishNonDefault true
+
+    def androidVersions = rootProject.ext.android
+
+    compileSdkVersion androidVersions.compileSdkVersion
+
+    defaultConfig {
+        minSdkVersion androidVersions.minSdkVersion
+        targetSdkVersion androidVersions.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+
+    configurations {
+        devDebugImplementation
+        devReleaseImplementation
+        stagingDebugImplementation
+        stagingReleaseImplementation
+        productionDebugImplementation
+        productionReleaseImplementation
+    }
+
+    buildTypes {
+        debug {
+
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    flavorDimensions 'server'
+
+    productFlavors {
+        dev {
+            dimension 'server'
+            versionNameSuffix 'test'
+            resValue "string", "server_domain", "https://google.com"
+        }
+        staging {
+            dimension 'server'
+            versionNameSuffix 'test'
+            resValue "string", "server_domain", "https://google.com"
+        }
+        production {
+            dimension 'server'
+            resValue "string", "server_domain", "https://google.com"
+        }
+    }
+}
+
+kapt {
+    generateStubs = true
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    def room_version = "1.1.1"
+    def commonDependencies = rootProject.ext.commonDependencies
+
+    // Kotlin
+    implementation commonDependencies.kotlin
+
+    // Dagger 2
+    api commonDependencies.dagger2
+    kapt  commonDependencies.dagger2Compiler
+
+    // RxKotlin
+    api commonDependencies.rxKotlin2
+    api commonDependencies.rxAndroid
+
+    // Testing
+    testImplementation commonTestDependencies.junit
+    androidTestImplementation commonTestDependencies.runner
+    androidTestImplementation commonTestDependencies.espresso
+
+    implementation project(':base')
+    implementation "android.arch.persistence.room:runtime:$room_version"
+    kapt "android.arch.persistence.room:compiler:$room_version"
+
+    // optional - RxJava support for Room
+    implementation "android.arch.persistence.room:rxjava2:$room_version"
+}

@@ -1,0 +1,93 @@
+apply plugin: 'com.android.feature'
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
+apply plugin: 'kotlin-kapt'
+
+android {
+    def androidVersions = rootProject.ext.android
+
+    compileSdkVersion androidVersions.compileSdkVersion
+
+    baseFeature true
+
+    defaultConfig {
+        minSdkVersion androidVersions.minSdkVersion
+        targetSdkVersion androidVersions.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    dataBinding {
+        enabled true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+kapt {
+    generateStubs = true
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    def commonDependencies = rootProject.ext.commonDependencies
+
+    // Kotlin
+    implementation commonDependencies.kotlin
+
+    // Rx
+    api commonDependencies.rxKotlin2
+    api commonDependencies.rxAndroid
+
+    // Android
+    api commonDependencies.supportAppCompatV7
+    api commonDependencies.supportRecyclerView
+    api commonDependencies.constraintLayout
+    api commonDependencies.supportDesign
+    api commonDependencies.exifinterface
+    api commonDependencies.supportCardView
+
+    // Network
+    api commonDependencies.retrofit2
+    api commonDependencies.retrofitRxAdapter
+    api commonDependencies.retrofitConverter
+    api commonDependencies.okHttp
+    api commonDependencies.okHttpInterceptor
+
+    // Gson
+    api commonDependencies.gson
+
+    // Architecture Components
+    api commonDependencies.archLifecycleExtensions
+
+    // Dagger 2
+    api commonDependencies.dagger2
+    kapt commonDependencies.dagger2Compiler
+
+    // Testing
+    testImplementation commonTestDependencies.junit
+    androidTestImplementation commonTestDependencies.runner
+    androidTestImplementation commonTestDependencies.espresso
+
+    application project(':app')
+    feature project(":data")
+
+    api 'pl.droidsonroids.gif:android-gif-drawable:1.2.12'
+}

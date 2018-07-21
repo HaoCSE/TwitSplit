@@ -1,0 +1,89 @@
+apply plugin: 'com.android.application'
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
+apply plugin: 'kotlin-kapt'
+
+
+int VERSION_CODE = 1
+String VERSION_NAME = "1.0"
+
+String APK_NAME = "TwitSplit"
+
+// This line generates the apk with set name.
+project.archivesBaseName = APK_NAME + "_v_" + VERSION_NAME
+android {
+    def androidVersions = rootProject.ext.android
+
+    compileSdkVersion androidVersions.compileSdkVersion
+    defaultConfig {
+        applicationId "net.fitken.twitsplit"
+        minSdkVersion androidVersions.minSdkVersion
+        targetSdkVersion androidVersions.targetSdkVersion
+        versionCode VERSION_CODE
+        versionName VERSION_NAME
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    dataBinding {
+        enabled true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    flavorDimensions 'server'
+    productFlavors {
+        dev {
+            dimension 'server'
+            versionNameSuffix 'test'
+        }
+        staging {
+            dimension 'server'
+            versionNameSuffix 'test'
+        }
+        production {
+            dimension 'server'
+        }
+    }
+}
+
+kapt {
+    generateStubs = true
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    def commonDependencies = rootProject.ext.commonDependencies
+
+    // Android
+    api commonDependencies.supportCardView
+
+    // Kotlin
+    implementation commonDependencies.kotlin
+
+    // RxKotlin
+    api commonDependencies.rxKotlin2
+    api commonDependencies.rxAndroid
+
+    // Dagger 2
+    api commonDependencies.dagger2
+    kapt commonDependencies.dagger2Compiler
+
+    // Testing
+    testImplementation commonTestDependencies.junit
+    androidTestImplementation commonTestDependencies.runner
+    androidTestImplementation commonTestDependencies.espresso
+    implementation project(':base')
+    implementation project(':data')
+}
