@@ -2,14 +2,14 @@ package net.fitken.twitsplit.login
 
 import android.os.Bundle
 import com.base.utils.start
-import net.fitken.twitsplit.MainActivity
+import com.data.twitter.TwitterRestClient
 import net.fitken.twitsplit.R
 import net.fitken.twitsplit.databinding.ActivityLoginBinding
-import net.fitken.twitsplit.twitterclient.OAuthLoginActionBarActivity
-import net.fitken.twitsplit.twitterclient.RestClient
+import net.fitken.twitsplit.home.HomeActivity
+import net.fitken.twitsplit.twitter.OAuthLoginActionBarActivity
 import java.lang.Exception
 
-class LoginActivity : OAuthLoginActionBarActivity<RestClient, ActivityLoginBinding, LoginViewModel>(), LoginView {
+class LoginActivity : OAuthLoginActionBarActivity<TwitterRestClient, ActivityLoginBinding, LoginViewModel>(), LoginView {
 
     override fun getLayoutId(): Int {
         return R.layout.activity_login
@@ -25,7 +25,7 @@ class LoginActivity : OAuthLoginActionBarActivity<RestClient, ActivityLoginBindi
     }
 
     override fun onLoginSuccess() {
-        start<MainActivity>()
+        start<HomeActivity>()
     }
 
     override fun onLoginFailure(p0: Exception?) {

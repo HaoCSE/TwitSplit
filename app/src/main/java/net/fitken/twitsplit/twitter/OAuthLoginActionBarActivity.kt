@@ -1,4 +1,4 @@
-package net.fitken.twitsplit.twitterclient
+package net.fitken.twitsplit.twitter
 
 import android.content.Intent
 import android.databinding.ViewDataBinding

@@ -1,4 +1,4 @@
-package net.fitken.twitsplit.twitterclient
+package com.data.twitter
 
 import android.content.Context
 
@@ -21,7 +21,7 @@ import org.scribe.builder.api.TwitterApi
  * NOTE: You may want to rename this object based on the service i.e TwitterClient or FlickrClient
  *
  */
-class RestClient(context: Context) : OAuthBaseClient(context, REST_API_CLASS, REST_URL, REST_CONSUMER_KEY, REST_CONSUMER_SECRET, REST_CALLBACK_URL) {
+class TwitterRestClient(context: Context) : OAuthBaseClient(context, REST_API_CLASS, REST_URL, REST_CONSUMER_KEY, REST_CONSUMER_SECRET, REST_CALLBACK_URL) {
 
     // CHANGE THIS
     // DEFINE METHODS for different API endpoints here
@@ -30,7 +30,7 @@ class RestClient(context: Context) : OAuthBaseClient(context, REST_API_CLASS, RE
         // Can specify query string params directly or through RequestParams.
         val params = RequestParams()
         params.put("format", "json")
-        client.get(apiUrl, params, handler)
+        getClient().get(apiUrl, params, handler)
     }
 
     /* 1. Define the endpoint URL with getApiUrl and pass a relative path to the endpoint

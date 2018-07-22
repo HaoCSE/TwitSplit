@@ -6,7 +6,7 @@
 
         <variable
             name="tweet"
-            type="net.fitken.twitsplit.model.TweetModel" />
+            type="com.data.model.TweetModel" />
     </data>
 
     <android.support.constraint.ConstraintLayout

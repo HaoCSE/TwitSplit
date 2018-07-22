@@ -1,12 +1,8 @@
-package net.fitken.twitsplit.model;
+package com.data.model;
 
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
-
-/**
- * Created by Ken on 3/4/2017.
- */
 
 public class TweetModel {
     @SerializedName("created_at")
