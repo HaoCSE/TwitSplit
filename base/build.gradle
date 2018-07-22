@@ -88,6 +88,4 @@ dependencies {
 
     application project(':app')
     feature project(":data")
-
-    api 'pl.droidsonroids.gif:android-gif-drawable:1.2.12'
 }

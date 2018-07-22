@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">TwitSplit</string>
+    <string name="login">Connect to Twitter</string>
+    <string name="tweet">Tweet</string>
+    <string name="what_s_happening">What\'s happening?</string>
 </resources>

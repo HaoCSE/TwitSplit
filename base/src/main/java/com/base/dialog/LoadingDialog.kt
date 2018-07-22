@@ -4,8 +4,6 @@ import android.content.Context
 import android.os.Bundle
 import com.base.R
 import com.base.databinding.DialogLoadingBinding
-import pl.droidsonroids.gif.GifDrawable
-import java.io.IOException
 
 /**
  * Created by vophamtuananh on 1/7/18.
@@ -21,14 +19,6 @@ class LoadingDialog(context: Context) : BaseDialog<DialogLoadingBinding>(context
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setCancelable(false)
-        val gifFromResource: GifDrawable
-        try {
-            gifFromResource = GifDrawable(mViewDataBinding.root.resources, R.raw.loading)
-            mViewDataBinding.ivLoading.setImageDrawable(gifFromResource)
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
-
     }
 
     override fun dismiss() {

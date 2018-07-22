@@ -86,4 +86,7 @@ dependencies {
     androidTestImplementation commonTestDependencies.espresso
     implementation project(':base')
     implementation project(':data')
+    //CodePath OAuth Handler
+    compile 'com.codepath.libraries:android-oauth-handler:1.1.0'
+    compile 'com.makeramen:roundedimageview:2.3.0'
 }

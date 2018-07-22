@@ -1,0 +1,40 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="net.fitken.twitsplit.login.LoginViewModel" />
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:background="@android:color/holo_blue_light"
+        android:layout_height="match_parent">
+
+        <com.base.widgets.RippleTextView
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_centerInParent="true"
+            android:drawableLeft="@drawable/ic_logo"
+            android:drawablePadding="10dp"
+            android:drawableStart="@drawable/ic_logo"
+            android:fontFamily="@font/roboto_bold"
+            android:gravity="center"
+            android:onClick="@{() -> viewModel.login()}"
+            android:paddingBottom="10dp"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:paddingTop="10dp"
+            app:rtv_ripple_color="@android:color/holo_orange_dark"
+            android:text="@string/login"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:textColor="@android:color/white"
+            app:rtv_corners="@dimen/positive_20dp"
+            app:rtv_normal_color="@android:color/holo_blue_dark" />
+    </android.support.constraint.ConstraintLayout>
+</layout>
