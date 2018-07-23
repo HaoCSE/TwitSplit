@@ -7,6 +7,7 @@ class HomeViewModel : ActivityViewModel() {
 
     private lateinit var mTwitterDomain: TwitterDomain
     private var mPage = 1
+    private var mIsLoading: Boolean = false
 
     fun setViewModelAttributes(twitterDomain: TwitterDomain) {
         mTwitterDomain = twitterDomain
@@ -17,17 +18,45 @@ class HomeViewModel : ActivityViewModel() {
         getHomeTimeline()
     }
 
-    fun getHomeTimeline() {
+    private fun getHomeTimeline() {
         val view: HomeView? = view()
         view?.let {
             addDisposable(mTwitterDomain.getHomeTimeline(mPage)
-                    .doOnSubscribe { view.showLoading() }
-                    .doFinally { view.hideLoading() }
+                    .doOnSubscribe {
+                        if (!isLoadingMore()) {
+                            view.showLoading()
+                        }
+                        mIsLoading = true
+                    }
+                    .doFinally {
+                        view.hideLoading()
+                        mIsLoading = false
+                    }
                     .subscribe({
                         view.onTimelineLoaded(it)
                     }, {
                         view.showError(it)
                     }))
         }
+    }
+
+    fun refresh() {
+        if (mIsLoading) {
+            return
+        }
+        mPage = 1
+        getHomeTimeline()
+    }
+
+    fun loadMore() {
+        if (mIsLoading) {
+            return
+        }
+        mPage++
+        getHomeTimeline()
+    }
+
+    fun isLoadingMore(): Boolean {
+        return mPage != 1
     }
 }

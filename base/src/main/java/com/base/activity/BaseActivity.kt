@@ -8,17 +8,13 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.databinding.DataBindingUtil
 import android.databinding.ViewDataBinding
-import android.graphics.Rect
 import android.net.Uri
 import android.os.Bundle
 import android.support.annotation.LayoutRes
 import android.support.v7.app.AppCompatActivity
 import android.telephony.TelephonyManager
 import android.text.TextUtils
-import android.view.MotionEvent
 import android.view.View
-import android.view.inputmethod.InputMethodManager
-import android.widget.EditText
 import com.base.R
 import com.base.dialog.*
 import com.base.exception.ManuallyException
@@ -34,6 +30,8 @@ import com.base.utils.DeviceUtil.Companion.PERMISSION_WRITE_STORAGE_REQUEST_CODE
 import com.base.viewmodel.ActivityViewModel
 import com.base.viewmodel.CommonView
 import retrofit2.HttpException
+import java.io.IOException
+import java.net.UnknownHostException
 
 /**
  * Created by vophamtuananh on 1/7/18.
@@ -210,7 +208,7 @@ abstract class BaseActivity<B : ViewDataBinding, VM : ActivityViewModel> : AppCo
 
     private fun getThrowableMessage(e: Throwable): String {
         var msg: String? = null
-        if (e is NoConnectionException || e is ManuallyException)
+        if (e is NoConnectionException || e is ManuallyException || e is IOException)
             msg = e.message
         else if (e is HttpException) {
             msg = getHttpExceptionMessage(e)

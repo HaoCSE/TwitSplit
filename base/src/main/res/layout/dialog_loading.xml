@@ -14,7 +14,6 @@
         android:indeterminate="true"
         android:indeterminateTint="@color/colorWhite"
         app:lv_percent="15"
-        android:visibility="gone"
         app:lv_should_square="true" />
 
     </FrameLayout>

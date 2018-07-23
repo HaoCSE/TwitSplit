@@ -1,5 +1,6 @@
 package net.fitken.twitsplit.home
 
+import com.base.imageloader.ImageLoader
 import dagger.Module
 import dagger.Provides
 
@@ -7,8 +8,8 @@ import dagger.Provides
 class HomeModule {
 
     @Provides
-    fun adapter(): TweetAdapter {
-        return TweetAdapter()
+    fun adapter(imageLoader: ImageLoader): TweetAdapter {
+        return TweetAdapter(imageLoader)
     }
 }
 

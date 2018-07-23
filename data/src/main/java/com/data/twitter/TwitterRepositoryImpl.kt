@@ -11,6 +11,7 @@ import io.reactivex.Single
 import io.reactivex.SingleOnSubscribe
 import io.reactivex.schedulers.Schedulers
 import org.json.JSONArray
+import org.json.JSONObject
 
 
 class TwitterRepositoryImpl(private val mTwitterRestClient: TwitterRestClient) : TwitterRepository {
@@ -29,13 +30,14 @@ class TwitterRepositoryImpl(private val mTwitterRestClient: TwitterRestClient) :
                                 it.onSuccess(gson.fromJson(response.toString(), listType))
                             }
 
-                            override fun onFailure(statusCode: Int, headers: Array<out Header>?, throwable: Throwable?, errorResponse: JSONArray?) {
+
+                            override fun onFailure(statusCode: Int, headers: Array<out Header>?, throwable: Throwable?, errorResponse: JSONObject?) {
+                                super.onFailure(statusCode, headers, throwable, errorResponse)
                                 if (throwable != null) {
                                     it.onError(throwable)
                                 } else {
                                     it.onError(Throwable())
                                 }
-                                super.onFailure(statusCode, headers, throwable, errorResponse)
                             }
                         })
                     }
