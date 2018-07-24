@@ -31,6 +31,7 @@ package="net.fitken.twitsplit">
         </intent-filter>
     </activity>
     <activity android:name="net.fitken.twitsplit.home.HomeActivity" />
+    <activity android:name="net.fitken.twitsplit.composetweet.ComposeTweetActivity"
+        android:windowSoftInputMode="adjustResize"/>
 </application>
-
 </manifest>

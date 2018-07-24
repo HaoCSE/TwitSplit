@@ -21,7 +21,8 @@ import org.scribe.builder.api.TwitterApi
  * NOTE: You may want to rename this object based on the service i.e TwitterClient or FlickrClient
  *
  */
-class TwitterRestClient(context: Context) : OAuthBaseClient(context, REST_API_CLASS, REST_URL, REST_CONSUMER_KEY, REST_CONSUMER_SECRET, REST_CALLBACK_URL) {
+class TwitterRestClient(context: Context) : OAuthBaseClient(context, REST_API_CLASS, REST_URL, REST_CONSUMER_KEY,
+        REST_CONSUMER_SECRET, REST_CALLBACK_URL) {
 
     // CHANGE THIS
     // DEFINE METHODS for different API endpoints here

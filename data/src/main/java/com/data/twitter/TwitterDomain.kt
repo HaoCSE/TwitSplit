@@ -11,4 +11,8 @@ class TwitterDomain @Inject constructor(private var mRepository: TwitterReposito
     fun getHomeTimeline(page: Int): Single<List<TweetModel>> {
         return mRepository.getHomeTimeline(page).observeOn(AndroidSchedulers.mainThread())
     }
+
+    fun postTweet(tweet: String): Single<Boolean> {
+        return mRepository.postTweet(tweet).observeOn(AndroidSchedulers.mainThread())
+    }
 }

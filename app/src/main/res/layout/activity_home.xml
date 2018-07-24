@@ -53,6 +53,7 @@
             app:borderWidth="0dp"
             app:elevation="6dp"
             app:fabSize="normal"
+            android:onClick="@{() -> viewModel.composeTweet()}"
             app:layout_anchor="@id/mainSwipeContainer"
             app:layout_anchorGravity="bottom|right|end"
             app:layout_scrollFlags="scroll|enterAlways|snap"

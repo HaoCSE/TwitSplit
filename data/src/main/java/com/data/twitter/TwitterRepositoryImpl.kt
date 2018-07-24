@@ -45,4 +45,35 @@ class TwitterRepositoryImpl(private val mTwitterRestClient: TwitterRestClient) :
                 }).subscribeOn(Schedulers.io())
 
     }
+
+    override fun postTweet(tweet: String): Single<Boolean> {
+        return Single.create(
+                SingleOnSubscribe<Boolean> { it ->
+                    val mainHandler = Handler(Looper.getMainLooper())
+                    val mRunnable = Runnable {
+                        mTwitterRestClient.postTweet(tweet, object : JsonHttpResponseHandler() {
+
+                            override fun onSuccess(statusCode: Int, headers: Array<out Header>?, response: JSONObject?) {
+                                super.onSuccess(statusCode, headers, response)
+                                it.onSuccess(true)
+                            }
+                            override fun onSuccess(statusCode: Int, headers: Array<out Header>?, response: JSONArray?) {
+                                super.onSuccess(statusCode, headers, response)
+                                it.onSuccess(true)
+                            }
+
+                            override fun onFailure(statusCode: Int, headers: Array<out Header>?, throwable: Throwable?, errorResponse: JSONObject?) {
+                                super.onFailure(statusCode, headers, throwable, errorResponse)
+                                if (throwable != null) {
+                                    it.onError(throwable)
+                                } else {
+                                    it.onError(Throwable())
+                                }
+                            }
+                        })
+                    }
+                    mainHandler.post(mRunnable)
+                }
+        ).subscribeOn(Schedulers.io())
+    }
 }

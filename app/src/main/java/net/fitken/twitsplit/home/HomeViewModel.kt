@@ -59,4 +59,9 @@ class HomeViewModel : ActivityViewModel() {
     fun isLoadingMore(): Boolean {
         return mPage != 1
     }
+
+    fun composeTweet() {
+        val view: HomeView? = view()
+        view?.onComposeTweet()
+    }
 }

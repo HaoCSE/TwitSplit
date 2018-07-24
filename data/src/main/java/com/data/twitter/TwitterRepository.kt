@@ -5,4 +5,5 @@ import io.reactivex.Single
 
 interface TwitterRepository {
     fun getHomeTimeline(page: Int): Single<List<TweetModel>>
+    fun postTweet(tweet: String): Single<Boolean>
 }

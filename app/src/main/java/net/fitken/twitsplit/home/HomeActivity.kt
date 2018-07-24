@@ -1,5 +1,7 @@
 package net.fitken.twitsplit.home
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
@@ -9,15 +11,22 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import com.base.activity.BaseInjectingActivity
+import com.base.utils.start
+import com.base.utils.startForResult
 import com.data.model.TweetModel
 import com.data.twitter.TwitterDomain
 import net.fitken.twitsplit.R
 import net.fitken.twitsplit.app.App
+import net.fitken.twitsplit.composetweet.ComposeTweetActivity
 import net.fitken.twitsplit.databinding.ActivityHomeBinding
 import javax.inject.Inject
 
 
 class HomeActivity : BaseInjectingActivity<ActivityHomeBinding, HomeViewModel, HomeComponent>(), HomeView {
+
+    companion object {
+        const val COMPOSE_TWEET_REQUEST_CODE = 1000
+    }
 
     @Inject
     lateinit var mAdapter: TweetAdapter
@@ -115,4 +124,14 @@ class HomeActivity : BaseInjectingActivity<ActivityHomeBinding, HomeViewModel, H
         return super.onOptionsItemSelected(item)
     }
 
+    override fun onComposeTweet() {
+        startForResult<ComposeTweetActivity>(COMPOSE_TWEET_REQUEST_CODE)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == COMPOSE_TWEET_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            mViewModel?.refresh()
+        }
+    }
 }
