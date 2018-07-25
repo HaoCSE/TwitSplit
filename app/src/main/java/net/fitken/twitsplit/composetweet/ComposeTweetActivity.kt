@@ -42,4 +42,8 @@ class ComposeTweetActivity : BaseInjectingActivity<ActivityComposeTweetBinding, 
         setResult(Activity.RESULT_OK)
         finish()
     }
+
+    override fun onClose() {
+        onBackPressed()
+    }
 }

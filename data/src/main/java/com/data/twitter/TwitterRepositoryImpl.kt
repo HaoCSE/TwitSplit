@@ -2,11 +2,14 @@ package com.data.twitter
 
 import android.os.Handler
 import android.os.Looper
+import com.base.utils.debug.ShowLog
 import com.data.model.TweetModel
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.loopj.android.http.JsonHttpResponseHandler
 import cz.msebera.android.httpclient.Header
+import io.reactivex.Observable
+import io.reactivex.ObservableOnSubscribe
 import io.reactivex.Single
 import io.reactivex.SingleOnSubscribe
 import io.reactivex.schedulers.Schedulers
@@ -46,20 +49,36 @@ class TwitterRepositoryImpl(private val mTwitterRestClient: TwitterRestClient) :
 
     }
 
-    override fun postTweet(tweet: String): Single<Boolean> {
-        return Single.create(
-                SingleOnSubscribe<Boolean> { it ->
+    override fun postTweet(tweets: ArrayList<String>): Observable<Boolean> {
+        return Observable.range(0, tweets.size)
+                .flatMap({ index ->
+                    ShowLog.error(tweets[index])
+                    // for every index make new request
+                    postTweet(tweets[index]).map{
+                        it
+                    }// this shall return Observable<Response>
+                }, 1)
+                .subscribeOn(Schedulers.io())
+
+    }
+
+    private fun postTweet(tweet: String): Observable<Boolean> {
+        return Observable.create(
+                ObservableOnSubscribe<Boolean> { it ->
                     val mainHandler = Handler(Looper.getMainLooper())
                     val mRunnable = Runnable {
                         mTwitterRestClient.postTweet(tweet, object : JsonHttpResponseHandler() {
 
                             override fun onSuccess(statusCode: Int, headers: Array<out Header>?, response: JSONObject?) {
                                 super.onSuccess(statusCode, headers, response)
-                                it.onSuccess(true)
+                                it.onNext(true)
+                                it.onComplete()
                             }
+
                             override fun onSuccess(statusCode: Int, headers: Array<out Header>?, response: JSONArray?) {
                                 super.onSuccess(statusCode, headers, response)
-                                it.onSuccess(true)
+                                it.onNext(true)
+                                it.onComplete()
                             }
 
                             override fun onFailure(statusCode: Int, headers: Array<out Header>?, throwable: Throwable?, errorResponse: JSONObject?) {
