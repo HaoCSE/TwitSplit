@@ -32,4 +32,4 @@ the following functionality:
 3. The business logic should be unit tested.
 4. The submission should be a git repository. In the project directory, `git log` should
     show your commits.
-5. Bonus points for any additional polish and sophistication you add to the experience.
+5. Some additional polish and sophistication I added to the experience.
