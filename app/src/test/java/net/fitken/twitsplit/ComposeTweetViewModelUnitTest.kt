@@ -14,7 +14,7 @@ class ComposeTweetViewModelUnitTest {
     }
 
     @Test
-    fun splitMessage_moreThan50WithNoSpace_returnEquals() {
+    fun splitMessage_moreThan50_returnEquals() {
         assertEquals(composeTweetViewModel.splitMessage("I can't believe Tweeter now supports chunking my messages, so I don't have to do it myself."),
                 arrayListOf("1/2 I can't believe Tweeter now supports chunking", "2/2 my messages, so I don't have to do it myself."))
     }
