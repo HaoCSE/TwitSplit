@@ -47,8 +47,8 @@ class ComposeTweetViewModel : ActivityViewModel() {
     }
 
     fun splitMessage(message: String): ArrayList<String> {
-        if (message.length > MAX_MESSAGE_LENGTH) {
-            var numOfMessage: Int = Math.ceil((message.length.toDouble() / MAX_MESSAGE_LENGTH.toDouble())).toInt()
+        if (message.length > MAX_MESSAGE_LENGTH) { //if the message length more than Twitter max length then split
+            var numOfMessage: Int = Math.ceil((message.length.toDouble() / MAX_MESSAGE_LENGTH.toDouble())).toInt() //calculate the number of message need to split
 
             val arrMessages: ArrayList<String> = ArrayList()
 
@@ -58,7 +58,10 @@ class ComposeTweetViewModel : ActivityViewModel() {
             var additionLength = 0
             while (index <= numOfMessage) {
                 var prefix = "$index/$numOfMessage"
+
+                //re-calculate the number of message need to split because we split message by the last index of space
                 numOfMessage = Math.ceil((message.length.toDouble() + numOfMessage * prefix.length + 1 + additionLength) / MAX_MESSAGE_LENGTH.toDouble()).toInt()
+
                 prefix = "$index/$numOfMessage"
                 endIndex = startIndex + (MAX_MESSAGE_LENGTH - prefix.length)
                 if (endIndex > message.length) {
@@ -66,6 +69,7 @@ class ComposeTweetViewModel : ActivityViewModel() {
                 }
 
                 val msg = message.substring(startIndex, endIndex)
+                //get last index of space because we don't want the split sentence have a no meaning word
                 var lastSpaceIndex = startIndex + msg.lastIndexOf(" ")
                 if (index == numOfMessage) {
                     lastSpaceIndex = endIndex

@@ -44,7 +44,7 @@ class TwitterRepositoryImpl(private val mTwitterRestClient: TwitterRestClient) :
                             }
                         })
                     }
-                    mainHandler.post(myRunnable)
+                    mainHandler.post(myRunnable) //async to sync then return a single
                 }).subscribeOn(Schedulers.io())
 
     }
@@ -56,8 +56,8 @@ class TwitterRepositoryImpl(private val mTwitterRestClient: TwitterRestClient) :
                     // for every index make new request
                     postTweet(tweets[index]).map{
                         it
-                    }// this shall return Observable<Response>
-                }, 1)
+                    }
+                }, 1) //only create new request after the previous one is completed
                 .subscribeOn(Schedulers.io())
 
     }
@@ -91,7 +91,7 @@ class TwitterRepositoryImpl(private val mTwitterRestClient: TwitterRestClient) :
                             }
                         })
                     }
-                    mainHandler.post(mRunnable)
+                    mainHandler.post(mRunnable) //async to sync then return a single
                 }
         ).subscribeOn(Schedulers.io())
     }
